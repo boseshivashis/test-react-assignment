@@ -1,30 +1,42 @@
 import React, {useState, useEffect} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import "../../App.css";
-import { createDeck } from "../../utils/api";
+import { readDeck, updateDeck } from "../../utils/api";
 
-const CreateDeck = () => {
+const EditDeck = () => {
     const navigate = useNavigate();
+    const {deckId} = useParams();
 
-    const initialFormData = {
-        name: '',
-        description: ''
-    };
+    console.log("Deck is ", deckId);
 
-    const [formData, setFormData] = useState(initialFormData)
+    const [initialdeckData, setInitialDeckData] = useState[{}];
+
+    useEffect(() => {
+        async function getCardData() {
+            const existCardRec = await readDeck(deckId);
+            setInitialDeckData(...initialdeckData, existCardRec);
+        };
+        getCardData();
+
+
+    }, [deckId]);
 
    
 
-    const handleSubmit = (event) => {
+    const [formData, setFormData] = useState(initialdeckData)
+
+  
+
+    const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent the default form submission
-        console.log("Creating Deck with data: ", formData);
-        const createDeckResponse = createDeck(formData);
-        console.log("Create Desk Response ", createDeckResponse);
+        console.log("Updating Deck with data: ", formData);
+        const createDeckResponse = await updateDeck(formData);
+        console.log("Updating Desk Response ", createDeckResponse);
 
         
         // Here you would typically send formData to your API or state management
         // For example: createDeck(formData);
-        navigate(`/decks/{createDeckResponse.id}`); // Navigate to home or other page after submission
+        //navigate(`/decks/{createDeckResponse.id}`); // Navigate to home or other page after submission
 
       };
 
@@ -45,12 +57,12 @@ const CreateDeck = () => {
     return (
     <div>
         <div className="App-link">
-            <Link to="/">Home</Link> / Create Deck
+            <Link to="/">Home</Link> / Edit Deck
         </div>
 
-        <h2>Create Deck</h2>
+        <h2>Edit Deck</h2>
 
-        <form name="createForm" onSubmit={handleSubmit}>
+        <form name="updateEditDeck" onSubmit={handleSubmit}>
 
             <table>
             <thead></thead>
@@ -73,7 +85,7 @@ const CreateDeck = () => {
                         value={formData.name}
                         size={60}
                         onChange={handleChange}
-                        placeholder="Deck name"/>
+                        placeholder={formData.name}/>
                     </td>
                 </tr>
                 <tr>
@@ -93,8 +105,9 @@ const CreateDeck = () => {
                                     rows={6}
                                     cols={60}
                                     onChange={handleChange}
-                                    placeholder="Brief Description of the deck"
+                                    placeholder={formData.description}
                                 />
+                    <input type="hidden" name="id" value={formData.id} />
                     </td>
                 </tr>
                 <tr>
@@ -123,4 +136,4 @@ const CreateDeck = () => {
     );
 }
 
-export default CreateDeck;
+export default EditDeck;

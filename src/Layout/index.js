@@ -22,13 +22,15 @@ function Layout() {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/decks/new" element={<CreateDeck/>}/>
+            <Route path="/decks/:deckId" element={<Deck/>} />
+
+            <Route path="/decks/:deckId/edit" element={<EditDeck/>} />
+            <Route path="/decks/:deckId/cards/:cardId/edit" element={<EditCard/>} />
+            <Route path="/decks/:deckId/study" element={<Study/>} />
+            <Route path="/decks/:deckId/cards/new" element={<AddCard/>} />
+
+
             
-            <Route path="/decks/:deckId" element={<Deck/>} >
-                <Route path="study" element={<Study/>} />
-                <Route path="edit" element={<EditDeck/>} />
-                <Route path="cards/new" element={<AddCard/>} />
-                <Route path="cards/:cardId/edit" element={<EditCard/>} />
-          </Route>
 
 
           <Route path="*" element={<NotFound/>} />

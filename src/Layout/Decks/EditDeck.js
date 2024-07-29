@@ -4,28 +4,34 @@ import "../../App.css";
 import { readDeck, updateDeck } from "../../utils/api";
 
 const EditDeck = () => {
+    
     const navigate = useNavigate();
     const {deckId} = useParams();
 
     console.log("Deck is ", deckId);
 
-    const [initialdeckData, setInitialDeckData] = useState[{}];
+    const [deckData, setDeckData] = useState({});
+    const [formData, setFormData] = useState({});
+
+ 
 
     useEffect(() => {
-        async function getCardData() {
-            const existCardRec = await readDeck(deckId);
-            setInitialDeckData(existCardRec);
+        async function getDeckData() {
+            const deckRecords = await readDeck(deckId);
+            setDeckData(deckRecords);
+            setFormData(deckRecords);
+
         };
-        getCardData();
+        getDeckData();
 
 
     }, [deckId]);
 
-   
-
-    const [formData, setFormData] = useState(initialdeckData)
-
+    console.log("After useEffect() deckData is ", deckData);
   
+    //const [formData, setFormData] = useState({...deckData, deckData});
+    console.log("After useEffect() form data is ", formData);
+
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent the default form submission
@@ -37,12 +43,15 @@ const EditDeck = () => {
         // Here you would typically send formData to your API or state management
         // For example: createDeck(formData);
         //navigate(`/decks/{createDeckResponse.id}`); // Navigate to home or other page after submission
+        navigate("/");
 
       };
 
-    const handleCancel = () => {
+   
+      const handleCancel = () => {
 
         console.log("Cancelling Deck")
+        navigate(`/decks/{deckId}`);
     }
 
 
@@ -84,8 +93,8 @@ const EditDeck = () => {
                         name="name"
                         value={formData.name}
                         size={60}
-                        onChange={handleChange}
-                        placeholder={formData.name}/>
+                        onChange={handleChange} 
+                        />
                     </td>
                 </tr>
                 <tr>
@@ -105,9 +114,8 @@ const EditDeck = () => {
                                     rows={6}
                                     cols={60}
                                     onChange={handleChange}
-                                    placeholder={formData.description}
                                 />
-                    <input type="hidden" name="id" value={formData.id} />
+                    <input type="hidden" name="id" value={deckData.id} />
                     </td>
                 </tr>
                 <tr>

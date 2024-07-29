@@ -24,25 +24,20 @@ const Deck = () => {
 
     }, [deckId]);
 
-    
-
-  
-   
     const handleEditCard = (cardId, deckId) => {
-        console.log("Edit Card for deck Id ",deckId);
-        console.log("Edit Card for card Id ",cardId);
-
-        //navigate(`/decks/${deckId}/cards/${cardId}/edit`);
         navigate(`cards/${cardId}/edit`);
 
+    }
+
+    const handleAddCard = () => {
+        
+        navigate(`/decks/${deckId}/cards/new`);
     }
 
     const handleCardDelete = async (cardId, deckId) => {
 
         const confirmed = window.confirm("Delete this card? You will not be able to recover it");
-        if(confirmed) {
-            console.log("Call Delete Card");
-            
+        if(confirmed) {            
                     const deletedCardRecord = await deleteCard(cardId);
                     const updatedCardList = cardListForDeck.filter(card => card.id !== cardId);
                     setCardListForDeck(updatedCardList);
@@ -56,10 +51,13 @@ const Deck = () => {
     }
 
     const handleDeckEdit = (deckId) => {
-        console.log("Editeding Deck ", deckId);
         navigate(`/decks/${deckId}/edit`);
     }
 
+    const handleDeckStudy = (deckId) => {
+        console.log("Deck Id for Study ", deckId);
+        navigate(`/decks/{deckId}/study`);
+    }
     return (
         <div >
                     <Header></Header>
@@ -86,9 +84,9 @@ const Deck = () => {
                 <td>
                     <button onClick={() => handleDeckEdit(deckData.id)}>Edit</button>
                     &nbsp;&nbsp;
-                    <button>Study</button>
+                    <button onClick = {() => handleDeckStudy(deckData.id)}>Study</button>
                     &nbsp;&nbsp;
-                    <button>Add Cards</button>
+                    <button onClick={() => handleAddCard(deckData.id, deckData.name)}>Add Cards</button>
                     &nbsp;&nbsp;
                     <button>Delete</button>
 
