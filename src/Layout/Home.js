@@ -51,20 +51,30 @@ const Home = () => {
     return (
         <>
             <Header />
-            <button onClick={() => HandleCreateDeck}>Create Deck</button>
-            <div>
+            <button onClick={() => HandleCreateDeck()}>Create Deck</button>
+            <div >
             {
               
               deckList.map((existingDeck) => (
                 <div key={existingDeck.id}>
-                <div>{existingDeck.name}</div>
-                <div>{existingDeck.description}</div>
+                <div><b>{existingDeck.name}</b>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{existingDeck.cards.length} cards
+                
+                
+                </div>
+                <div >{existingDeck.description}</div>
 
-                <button >Study</button> &nbsp;
                 <button to={`/decks/${existingDeck.id}/edit`}>View</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
+
                 {/* Additional options: view and delete */}
                 <button to={`/decks/${existingDeck.id}/edit`}>Study</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
                 <button onClick={() => handleDelete(existingDeck.id)}>Delete</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+
                 </div>
         ) )
             }
