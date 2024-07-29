@@ -25,12 +25,13 @@ const CreateDeck = () => {
     const handleSubmit = (event) => {
         event.preventDefault(); // Prevent the default form submission
         console.log("Creating Deck with data: ", formData);
-        createDeck(formData);
+        const createDeckResponse = createDeck(formData);
+        console.log("Create Desk Response ", createDeckResponse);
 
         
         // Here you would typically send formData to your API or state management
         // For example: createDeck(formData);
-        navigate("/"); // Navigate to home or other page after submission
+        navigate(`/decks/{createDeckResponse.id}`); // Navigate to home or other page after submission
 
       };
 
@@ -50,7 +51,6 @@ const CreateDeck = () => {
 
     return (
     <div>
-            <p>Create Deck</p>
         <div className="App-link">
             <Link to="/">Home</Link> / Create Deck
         </div>
