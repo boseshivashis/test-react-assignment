@@ -29,6 +29,8 @@ function Layout() {
                 <Route path="cards/new" element={<AddCard/>} />
                 <Route path="cards/:cardId/edit" element={<EditCard/>} />
           </Route>
+
+
           <Route path="*" element={<NotFound/>} />
 
           </Routes>

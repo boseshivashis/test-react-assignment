@@ -1,14 +1,16 @@
 import React, { useState, useEffect} from "react";
 import { deleteCard, readDeck } from "../../utils/api";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams, Outlet, useLocation} from "react-router-dom";
 import Header from "../Header";
+import Layout from "../../Layout";
 
 
 const Deck = () => {
     const { deckId } = useParams();
     const navigate = useNavigate();
+    const currentLocation = useLocation();
+    
 
-    console.log("Deck Id is from parameter is ", deckId);
     const [deckData, setDeckData] = useState({});
      const [cardListForDeck, setCardListForDeck] = useState([]);
 
@@ -24,25 +26,25 @@ const Deck = () => {
 
     
 
-    console.log("Deck Record is",deckData )
-    console.log("Card List is ", cardListForDeck)
+  
    
     const handleEditCard = (cardId, deckId) => {
         console.log("Edit Card for deck Id ",deckId);
         console.log("Edit Card for card Id ",cardId);
-        navigate(`/decks/${deckId}/cards/${cardId}/edit`);
+
+        //navigate(`/decks/${deckId}/cards/${cardId}/edit`);
+        navigate(`cards/${cardId}/edit`);
+
     }
 
     const handleCardDelete = async (cardId, deckId) => {
-        console.log("Delete Card for deck Id ",deckId);
-        console.log("Delete Card for card Id ",cardId);    
-    
+
         const confirmed = window.confirm("Delete this card? You will not be able to recover it");
         if(confirmed) {
             console.log("Call Delete Card");
             
                     const deletedCardRecord = await deleteCard(cardId);
-                    const updatedCardList = cardListForDeck.filter(card => card.id != cardId);
+                    const updatedCardList = cardListForDeck.filter(card => card.id !== cardId);
                     setCardListForDeck(updatedCardList);
         
                 }            
@@ -51,6 +53,11 @@ const Deck = () => {
         }
 
     
+    }
+
+    const handleDeckEdit = (deckId) => {
+        console.log("Editeding Deck ", deckId);
+        navigate(`/decks/${deckId}/edit`);
     }
 
     return (
@@ -77,7 +84,7 @@ const Deck = () => {
 
             <tr>
                 <td>
-                    <button>Edit</button>
+                    <button onClick={() => handleDeckEdit(deckData.id)}>Edit</button>
                     &nbsp;&nbsp;
                     <button>Study</button>
                     &nbsp;&nbsp;
@@ -123,7 +130,7 @@ const Deck = () => {
             
         </tbody>
     </table>
-    
+
     </div>
 
     );
