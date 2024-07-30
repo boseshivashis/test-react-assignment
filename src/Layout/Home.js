@@ -27,11 +27,12 @@ const Home = () => {
     }
 
    const  handleDeckView = (deckId) => {
-      navigate(`/decks/{deckId}`);
+      navigate(`/decks/${deckId}`); 
+
     }
 
     const handleStudy = (existDeckId) => {
-      navigate(`/decks/{existDeckId}/study)`);
+      navigate(`/decks/${existDeckId}/study`);
     }
 
     useEffect(() => {

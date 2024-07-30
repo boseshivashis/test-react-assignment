@@ -64,7 +64,7 @@ const AddCard = () => {
             <ol className="breadcrumb"> 
                 <li className="breadcrumb-item"><Link to="/">Home</Link> </li>  
                 <li className="breadcrumb-item active" aria-current="page">{deckData.name}</li>
-                <li className="breadcrumb-item active" aria-current="page">Add Cards</li>
+                <li className="breadcrumb-item active" aria-current="page">Add Card</li>
             </ol>
         </nav>
 
@@ -76,9 +76,10 @@ const AddCard = () => {
                     <tr>
                         <td><label htmlFor="front">
 
-</label><b>Front</b></td>
+                        </label><b>Front</b></td>
                     </tr>
                     <tr>
+                        <td>
                         <textarea id="front" 
                                     name="front"
                                     value={formData.front}
@@ -87,6 +88,7 @@ const AddCard = () => {
                                     placeholder="Front side of card"
                                     onChange={handleChange}
                         />
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
@@ -97,6 +99,7 @@ const AddCard = () => {
 </label><b>Back</b></td>
                     </tr>
                     <tr>
+                        <td>
                         <textarea id="back" 
                                     name="back"
                                     cols={60}
@@ -105,6 +108,7 @@ const AddCard = () => {
                                     value={formData.back}
                                     onChange={handleChange}
                         />
+                        </td>
                     </tr>
                     <tr>
                         <td><input type="hidden" name="deckId" id="deckId" value={deckData.id}/></td>

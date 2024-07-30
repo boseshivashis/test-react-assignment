@@ -1,14 +1,12 @@
 import React, { useState, useEffect} from "react";
 import { deleteCard, readDeck } from "../../utils/api";
-import {Link, useNavigate, useParams, Outlet, useLocation} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Header from "../Header";
-import Layout from "../../Layout";
 
 
 const Deck = () => {
     const { deckId } = useParams();
     const navigate = useNavigate();
-    const currentLocation = useLocation();
     
 
     const [deckData, setDeckData] = useState({});
@@ -26,20 +24,16 @@ const Deck = () => {
 
     const handleEditCard = (cardId, deckId) => {
         navigate(`cards/${cardId}/edit`);
-
     }
 
     const handleAddCard = () => {
-        
         navigate(`/decks/${deckId}/cards/new`);
     }
 
-
     const handleCardDelete = async (cardId, deckId) => {
-
         const confirmed = window.confirm("Delete this card? You will not be able to recover it");
         if(confirmed) {            
-                    const deletedCardRecord = await deleteCard(cardId);
+                    await deleteCard(cardId);
                     const updatedCardList = cardListForDeck.filter(card => card.id !== cardId);
                     setCardListForDeck(updatedCardList);
         
@@ -56,14 +50,18 @@ const Deck = () => {
     }
 
     const handleDeckStudy = (deckId) => {
-        console.log("Deck Id for Study ", deckId);
-        navigate(`/decks/{deckId}/study`);
+        navigate(`/decks/${deckId}/study`);
     }
     return (
         <div >
-                    <Header></Header>
+            <Header></Header>
 
-        <Link to="/">Home</Link> / {deckData.name}
+            <nav aria-label="breadcrumb"> 
+                <ol className="breadcrumb">  
+                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>  
+                    <li className="breadcrumb-item active" aria-current="page">{deckData.name}</li>
+                </ol>
+            </nav>
 
     <table>
     
@@ -99,15 +97,15 @@ const Deck = () => {
 
     <br/>
 
-    <table style={{border: "1"}}>
+    <table >
         <tbody>
             { cardListForDeck.length > 0 ? <tr><td><h2>Cards</h2></td></tr> : <tr><td></td></tr>}
             
         
-            {cardListForDeck.map((cardRecord) => 
+            {cardListForDeck.map((cardRecord, index) => 
             < >
-            <tr key={cardRecord.id}>
-                <td style={{ width: "30%", verticalAlign: "top" }}>                    
+            <tr key={index}>
+                <td key={index} style={{ width: "30%", verticalAlign: "top" }}>                    
                     {cardRecord.front}
               </td>
               <td style={{ width: "30%", verticalAlign: "top" }}>

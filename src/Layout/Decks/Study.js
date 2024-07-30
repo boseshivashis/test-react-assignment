@@ -2,13 +2,7 @@ import React, {useState, useEffect} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {readDeck} from "../../utils/api";
 
-/*
-A button at the bottom of each card "flips" it to the other side.
-After flipping the card, the screen shows a Next button (see the Next button section below) to continue to the next card.
-After the final card in the deck has been shown, a message (see the Restart prompt section below) is shown offering the user the opportunity to restart the deck.
-If the user does not restart the deck, they should return to the home screen.
-Studying a deck with two or fewer cards should display a "Not enough cards" message (see the "Not enough cards" section below) and a button to add cards to the deck.
-*/
+
 function Study() {
 
   const navigate = useNavigate();
@@ -37,17 +31,10 @@ function Study() {
   }, [deckId]);
 
   const currentCard = deckData.cards ? deckData.cards[currentIndex] : null;
+  if(currentCard) {
+    numberOfCards = deckData.cards.length;
 
-  console.log("After useEffect() deckData is ", deckData);
-
-
-    //const firstCard = deckData.cards.length > 3 ? deckData.cards[0] : 'No items available';
-    console.log("Card Lenth ", deckData.cards);
-    let cardElement = {};
-    if (deckData  && deckData.cards && deckData.cards.length >= 3) {
-      cardElement = deckData.cards[0];
-      numberOfCards = deckData.cards.length;
-    }
+  }
 
     const handleFlip = () => {
       setIsFlipped(!isFlipped);
@@ -55,12 +42,11 @@ function Study() {
     };
 
     const handleNext = () => {
-      console.log("Next Clicked");
 
       setCurrentIndex((currentValue) => currentValue + 1);
 
       if(currentIndex <  deckData.cards.length -1) {
-        setCurrentIndex((prevIndex) => prevIndex + 1);
+        //setCurrentIndex((prevIndex) => prevIndex + 1);
         setIsFlipped(false);
         setShowNextButton(false);
         
@@ -75,14 +61,23 @@ function Study() {
       }
     };
 
-    console.log("Current idex ", currentIndex)
 
     if (numberOfCards < 3) {
       return (
         <div>
-          <Link to="/">Home</Link> / {deckData.name} / Study
-          <h2>Study: {deckData.name}</h2>
+
+          <nav aria-label="breadcrumb"> 
+        <ol className="breadcrumb">  
+          <li className="breadcrumb-item"><Link to="/">Home</Link></li>  
+          <li className="breadcrumb-item active" aria-current="page">{deckData.name}</li>
+          <li className="breadcrumb-item active" aria-current="page">Study</li>
+
+        </ol>
+      </nav>
+
+          <h2>{deckData.name}: Study</h2>
           <h3>Not Enough Cards</h3>
+          <p>You need at least 3 cards to study. There are {numberOfCards} cards in this deck.</p>
           <Link to={`/decks/${deckId}/cards/new`}>
             <button>Add Cards</button>
           </Link>
