@@ -13,18 +13,16 @@ const CreateDeck = () => {
 
     const [formData, setFormData] = useState(initialFormData)
 
-   
-
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) =>  {
         event.preventDefault(); // Prevent the default form submission
         console.log("Creating Deck with data: ", formData);
-        const createDeckResponse = createDeck(formData);
+        const createDeckResponse = await createDeck(formData);
         console.log("Create Desk Response ", createDeckResponse);
 
         
         // Here you would typically send formData to your API or state management
         // For example: createDeck(formData);
-        navigate(`/decks/{createDeckResponse.id}`); // Navigate to home or other page after submission
+        navigate(`/decks/${createDeckResponse.id}`); // Navigate to home or other page after submission
 
       };
 
