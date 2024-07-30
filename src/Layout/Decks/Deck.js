@@ -34,6 +34,7 @@ const Deck = () => {
         navigate(`/decks/${deckId}/cards/new`);
     }
 
+
     const handleCardDelete = async (cardId, deckId) => {
 
         const confirmed = window.confirm("Delete this card? You will not be able to recover it");
@@ -86,7 +87,7 @@ const Deck = () => {
                     &nbsp;&nbsp;
                     <button onClick = {() => handleDeckStudy(deckData.id)}>Study</button>
                     &nbsp;&nbsp;
-                    <button onClick={() => handleAddCard(deckData.id, deckData.name)}>Add Cards</button>
+                    <button onClick={() => handleAddCard()}>Add Cards</button>
                     &nbsp;&nbsp;
                     <button>Delete</button>
 

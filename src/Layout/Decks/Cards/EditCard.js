@@ -76,7 +76,13 @@ const EditCard = () => {
     return (
         <div>
         <Header/>
-        <Link to="/">Home</Link> / {deckData.name} /  Edit Card {cardId}
+        <nav aria-label="breadcrumb"> <ol className="breadcrumb">  <li className="breadcrumb-item"><Link to="/">Home</Link> </li>  
+            <li className="breadcrumb-item active" aria-current="page">{deckData.name}</li>
+            <li className="breadcrumb-item active" aria-current="page">Edit Card {cardId}</li>
+
+
+  </ol></nav>
+
 
         <form name="EditCardForm" onSubmit={handleSubmit}>
             <table>
@@ -87,6 +93,7 @@ const EditCard = () => {
 </label><b>Front</b></td>
                     </tr>
                     <tr>
+                        <td>
                         <textarea id="front" 
                                     name="front"
                                     value={formData.front}
@@ -94,6 +101,7 @@ const EditCard = () => {
                                     rows={5}
                                     onChange={handleChange}
                         />
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
@@ -104,6 +112,7 @@ const EditCard = () => {
 </label><b>Back</b></td>
                     </tr>
                     <tr>
+                        <td>
                         <textarea id="back" 
                                     name="back"
                                     cols={60}
@@ -111,6 +120,7 @@ const EditCard = () => {
                                     value={formData.back}
                                     onChange={handleChange}
                         />
+                        </td>
                     </tr>
                     <tr>
                         <td><input type="hidden" name="deckId" id="deckId" value={formData.deckId}/></td>
